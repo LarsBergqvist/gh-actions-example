@@ -25,5 +25,21 @@ jobs:
         with:
           name: build-artifacts
           path: dist/gh-actions-example
+  deploy:
+    needs: test-and-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: build-artifacts
+          path: dist/gh-actions-example
+      - name: Deploy to gh-pages branch
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: gh-pages
+          folder: dist/gh-actions-example
 
 
